@@ -5,6 +5,7 @@ class AbstractMelonOrder(object):
 
     def __init__(self, species, qty):
         """Initialize melon order attributes."""
+        # attributes in dunder init are instance attributes, and are on the instance itself
 
         self.species = species
         self.qty = qty
@@ -15,7 +16,14 @@ class AbstractMelonOrder(object):
         """Calculate price, including tax."""
 
         base_price = 5
+
+        if self.species == "Christmas":
+            base_price = base_price * 1.5
+
         total = (1 + self.tax) * self.qty * base_price
+
+        if self.order_type == "international" and self.qty < 10:
+            total = total + 3
 
         return total
 
@@ -43,11 +51,11 @@ class InternationalMelonOrder(AbstractMelonOrder):
     def __init__(self, species, qty, country_code):
         """Initialize International melon order attributes."""
 
-        self.country_code = country_code
+        self._country_code = country_code
         super(InternationalMelonOrder, self).__init__(species, qty)
 
 
     def get_country_code(self):
         """Return the country code."""
 
-        return self.country_code
+        return self._country_code
