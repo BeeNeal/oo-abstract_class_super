@@ -1,3 +1,6 @@
+import random
+from datetime import datetime
+
 """Classes for melon orders."""
 
 class AbstractMelonOrder(object):
@@ -12,10 +15,18 @@ class AbstractMelonOrder(object):
         self.shipped = False
 
 
+    def get_base_price(self):
+        """Calculates base price, using randomization."""
+
+        base_price = random.randint(5, 9)
+
+        return base_price
+
+
     def get_total(self):
         """Calculate price, including tax."""
 
-        base_price = 5
+        base_price = self.get_base_price()
 
         if self.species == "Christmas":
             base_price = base_price * 1.5
@@ -78,5 +89,19 @@ class GovernmentMelonOrder(AbstractMelonOrder):
     passed_inspection = False
 
 
-    def mark_inspection():
-        pass
+    def mark_inspection(self, passed):
+        """ """
+        if not passed:
+            self.passed_inspection = True
+
+        return passed
+
+
+
+        # test_melon.mark_inspection(passed_inspection)
+        # Method mark_inspection takes in the argument passed_inspection
+        # as parameter passed. The conditional is entered if passed is still
+        # false, and then changes the passed_inspection value to True, and
+        # returns True.
+        # Must modify this if we create inspection method returning T/F, to
+        # make it so if inspection returns False, won't turn to True
